@@ -1,0 +1,35 @@
+{
+  "name": "ts-playground",
+  "version": "1.0.0",
+  "description": "Typescript playground",
+  "main": "src/main.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./dist ./node_modules",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "start": "ts-node -p . --files",
+    "start:prod": "node ./dist/main.js",
+    "test": "ts-node ./tests/main.ts",
+    "test:types": "yarn test types",
+    "test:runtime": "yarn test utils",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.12.11",
+    "axios": "^0.21.1",
+    "babel-core": "^6.26.3"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.12.12",
+    "@types/babel-types": "^7.0.9",
+    "@types/node": "^14.14.20",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
