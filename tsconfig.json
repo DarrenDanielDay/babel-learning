@@ -5,6 +5,8 @@
         "outDir": "dist",
         "sourceMap": true,
         "downlevelIteration": true,
+        "strict": true,
+        "strictNullChecks": true,
         "module": "CommonJS"
     },
     "include": [
