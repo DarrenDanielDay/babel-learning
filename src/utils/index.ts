@@ -19,8 +19,8 @@ export function showNode(...nodes: BabelTypes.Node[]) {
     .map(
       (node) =>
         `${node.type}[${node.start}, ${node.end}]:"${sourceCode.slice(
-          node.start,
-          node.end
+          node.start!,
+          node.end!
         )}"`
     )
     .forEach((code) => show(code));

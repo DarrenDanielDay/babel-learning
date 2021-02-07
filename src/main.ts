@@ -1,3 +1,3 @@
-import { main } from "./demo/parse-string";
+import { main } from "./demo/run-jquery";
 
-main()
+main();
