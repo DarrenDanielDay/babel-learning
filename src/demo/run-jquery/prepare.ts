@@ -1,4 +1,4 @@
-import { JSDOM } from 'jsdom'
+import { JSDOM } from "jsdom";
 const html = `\
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +11,8 @@ const html = `\
   <div id="root"></div>
 </body>
 </html>
-`
+`;
 
 const dom = new JSDOM(html);
 global.document = dom.window.document;
-global.window = dom.window.document.defaultView!
+global.window = dom.window.document.defaultView!;

@@ -7,7 +7,7 @@ export function show(...args: unknown[]) {
 }
 
 export function dividor() {
-    show("=".repeat(100));
+  show("=".repeat(100));
 }
 
 export function setSource(code: string) {

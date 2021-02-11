@@ -25,7 +25,7 @@ export interface BaseTypeDescriber {
   objectType: ObjectTypes;
 }
 
-export type TypeDescriber = ObjectTypeMapping[keyof ObjectTypeMapping]
+export type TypeDescriber = ObjectTypeMapping[keyof ObjectTypeMapping];
 
 export interface PrimitiveDescriber extends BaseTypeDescriber {
   objectType: "Primitive";
@@ -55,9 +55,11 @@ export type KeyTypes = SelectKey<PrimitiveTypes, "Symbol"> | RangeKeyTypes;
 
 type _KM<T extends KeyTypes> = T extends KeyTypes ? KeyField<T> : never;
 
-type _RM<K extends RangeKeyTypes> = K extends RangeKeyTypes ? RangedField<K> : never;
+type _RM<K extends RangeKeyTypes> = K extends RangeKeyTypes
+  ? RangedField<K>
+  : never;
 
-export type Field = _KM<KeyTypes> | _RM<RangeKeyTypes>
+export type Field = _KM<KeyTypes> | _RM<RangeKeyTypes>;
 
 export interface PlainObjectDescriber extends BaseTypeDescriber {
   objectType: "PlainObject";

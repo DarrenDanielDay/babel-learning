@@ -18,38 +18,77 @@ export async function* walk<R>(
 
 export class LocalFile implements IFile {
   content: string = "";
-  constructor(public path: string) {}
+  constructor(
+    public fileName: string,
+    public parentFolder: IFolder | null = null
+  ) {}
+  get path() {
+    return path.join(
+      this.parentFolder?.path ?? path.resolve("."),
+      this.fileName
+    );
+  }
   async read() {
     this.content = await fs.readFile(this.path, { encoding: "utf-8" });
+  }
+  async write(content: string) {
+    this.content = content;
+    await fs.writeFile(this.path, content, { encoding: "utf-8" });
   }
 }
 
 export class LocalFolder implements IFolder {
   subFolders: IFolder[] = [];
   files: IFile[] = [];
-  parentFolder: IFolder | null = null;
-  constructor(public path: string) {}
+  strategy?: {
+    folderHook?(folder: IFolder): boolean;
+    fileHook?(file: IFile): boolean;
+  };
+  constructor(
+    public folderName: string,
+    public parentFolder: IFolder | null = null
+  ) {}
+  get path() {
+    return path.join(
+      this.parentFolder?.path ?? path.resolve("."),
+      this.folderName
+    );
+  }
   async open(recursive: boolean = true): Promise<void> {
-    const subPaths = await fs.readdir(this.path);
+    const root = this.path;
+    const subPaths = await fs.readdir(root);
     const stats = await Promise.all(
-      subPaths.map((subPath) =>
-        fs.stat(subPath).then((stat) => ({
+      subPaths.map((subPath) => {
+        return fs.stat(path.resolve(root, subPath)).then((stat) => ({
           isFolder: stat.isDirectory(),
           isFile: stat.isFile(),
           path: subPath,
-        }))
-      )
+        }));
+      })
     );
     const folders = stats.filter((stat) => stat.isFolder);
     const files = stats.filter((stat) => stat.isFile);
     this.subFolders.length = 0;
     this.subFolders.push(
-      ...folders.map((folder) => new LocalFolder(folder.path))
+      ...folders
+        .map((folder) =>
+          new LocalFolder(folder.path, this).withStrategy(this.strategy)
+        )
+        .filter((folder) => this.strategy?.folderHook?.(folder) ?? true)
     );
     this.files.length = 0;
-    this.files.push(...files.map((file) => new LocalFile(file.path)));
+    this.files.push(
+      ...files
+        .map((file) => new LocalFile(file.path, this))
+        .filter((file) => this.strategy?.fileHook?.(file) ?? true)
+    );
     if (!recursive) return;
-    await Promise.all(this.files.map(file => file.read()));
+    await Promise.all(this.files.map((file) => file.read()));
     await Promise.all(this.subFolders.map((folder) => folder.open(recursive)));
+  }
+
+  withStrategy(strategy: this["strategy"]) {
+    this.strategy = strategy;
+    return this;
   }
 }

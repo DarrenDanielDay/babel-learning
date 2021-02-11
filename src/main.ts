@@ -1,3 +1,3 @@
-import { main } from "./demo/run-jquery";
+import { main } from "./demo/playground";
 
-main();
+main().catch((e) => console.log(e));
