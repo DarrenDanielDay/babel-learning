@@ -1,6 +1,6 @@
 export function* dfs<T, R>(
   root: T,
-  nexts: (node: T) => T[],
+  nexts: (node: T) => Iterable<T>,
   onNode: (node: T) => R
 ): Generator<R, void, unknown> {
   yield onNode.call(undefined, root);
@@ -11,7 +11,7 @@ export function* dfs<T, R>(
 
 export async function* dfsAsync<T, R>(
   root: T,
-  nexts: (node: T) => Promise<T[]>,
+  nexts: (node: T) => Promise<Iterable<T>>,
   onNode: (node: T) => Promise<R>
 ): AsyncGenerator<R, void, unknown> {
   yield onNode.call(undefined, root);

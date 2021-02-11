@@ -1,13 +1,3 @@
-export interface SourceCode {
-  fileName: string;
-  fullPath: string;
-  code: string;
-}
-
-export interface CodeAnalyseResult {
-  exportNames: string[];
-}
-
 export enum APIType {
   Value,
   Function,
