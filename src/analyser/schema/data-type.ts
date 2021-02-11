@@ -1,6 +1,6 @@
 import { SelectKey } from "../../utils/types";
 
-export interface ObjectTypeMapping {
+interface ObjectTypeMapping {
   Primitive: PrimitiveDescriber;
   PlainObject: PlainObjectDescriber;
   ThisFunction: ThisFunctionDescriber;
@@ -11,7 +11,7 @@ export type ObjectTypes = keyof ObjectTypeMapping;
 
 export type PrimitiveTypes = keyof PrimitiveTypeMapping;
 
-export interface PrimitiveTypeMapping {
+interface PrimitiveTypeMapping {
   Number: number;
   String: string;
   Boolean: boolean;
