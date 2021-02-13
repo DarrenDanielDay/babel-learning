@@ -26,7 +26,7 @@ export function exploreAPI(name: string, api: unknown) {
     return;
   }
   visitedObjects.add(api);
-  Object.entries(api as never).forEach(([childName, api]) =>
+  Object.entries(api as Record<string, unknown>).forEach(([childName, api]) =>
     exploreAPI(`${name}.${childName}`, api)
   );
 }

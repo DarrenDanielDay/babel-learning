@@ -1,5 +1,5 @@
 import * as BabelTypes from "@babel/types";
-
+export * from './type-guards';
 let sourceCode: string = "";
 
 export function show(...args: unknown[]) {
