@@ -1,6 +1,6 @@
 import path from "path";
 import { dfsAsync } from "./algorithm";
-import { IFile, IFolder } from "./schema/data-structure";
+import { IFile, IFolder } from "./schema";
 const fs: typeof import("fs/promises") = require("fs").promises;
 
 export async function* walk<R>(

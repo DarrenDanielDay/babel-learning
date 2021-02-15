@@ -1,8 +1,3 @@
-export interface ITreeNode<T> {
-  entry: T;
-  children: ITreeNode<T>[];
-  parent?: ITreeNode<T>;
-}
 export interface IFile {
   path: string;
   parentFolder: IFolder | null;

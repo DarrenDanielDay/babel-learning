@@ -1,4 +1,4 @@
-import { PrimitiveTypes } from "./types";
+import { PrimitiveTypes, TupleUnion, UnionToIntersection } from "./types";
 
 export const isNumber = (obj: unknown): obj is number =>
   typeof obj === "number";
@@ -19,3 +19,31 @@ export const isPrimitive = (obj: unknown): obj is PrimitiveTypes =>
   ["number", "string", "boolean", "undefined", "symbol", "bigint"].some(
     (typeName) => typeof obj === typeName
   ) || obj === null;
+export const withConstraint = <U, T extends U>(fn: (obj: U) => obj is T) => (
+  o: U
+): o is T => fn(o);
+type GuardUnion<Arr extends ((o: any) => o is unknown)[]> = Arr extends ((
+  o: any
+) => o is infer R)[]
+  ? R
+  : never;
+type GuardIntersection<
+  Arr extends ((o: any) => o is unknown)[]
+> = UnionToIntersection<GuardUnion<Arr>>;
+export const withLeastOneConstraint = <
+  S extends U,
+  T extends ((obj: U) => obj is S)[],
+  U = Parameters<T[0]>[0]
+>(
+  ...fns: T
+): ((o: U) => o is GuardUnion<T>) => (o: U): o is GuardUnion<T> =>
+  fns.some((fn) => fn(o));
+export const withAllConstraints = <
+  S extends U,
+  T extends ((obj: U) => obj is S)[],
+  U = Parameters<T[0]>[0]
+>(
+  ...fns: T
+): ((o: any) => o is GuardIntersection<T>) => (
+  o: any
+): o is GuardIntersection<T> => fns.every((fn) => fn(o));

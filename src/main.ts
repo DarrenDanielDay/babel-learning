@@ -1,3 +1,3 @@
-import { main } from "./demo/playground";
+import { main } from "./demo/parse-function";
 
-main().catch((e) => console.log(e));
+main();
