@@ -19,6 +19,7 @@ export const isPrimitive = (obj: unknown): obj is PrimitiveTypes =>
   ["number", "string", "boolean", "undefined", "symbol", "bigint"].some(
     (typeName) => typeof obj === typeName
   ) || obj === null;
+export const isTSObject = (obj: unknown): obj is object => typeof obj === "object" && obj !== null;
 export const withConstraint = <U, T extends U>(fn: (obj: U) => obj is T) => (
   o: U
 ): o is T => fn(o);

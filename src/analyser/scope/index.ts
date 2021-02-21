@@ -19,6 +19,7 @@ import { isPrimitive, withLeastOneConstraint } from "../../utils";
 import { unreachable } from "../../utils/assert";
 import { ScopeTree } from "../schema";
 import { wrapSingleStmtWithBlock } from "../ast-utils";
+import { bfs } from "../algorithm";
 
 export function emptyScopeTreeNode(parent?: ScopeTree): ScopeTree {
   return {
@@ -109,6 +110,9 @@ export function buildScopeTree(
   }
 }
 
-export function analyseFuncAndVar(scopeTree: ScopeTree) {
-  scopeTree;
+export function analyseFunc(scopeTree: ScopeTree) {
+    const iter = bfs(scopeTree, node => node.children, (node) => {
+
+    });
+    while (!iter.next().done);
 }
