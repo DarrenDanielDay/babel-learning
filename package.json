@@ -25,7 +25,8 @@
     "babel-core": "^6.26.3",
     "isomorphic-git": "^1.8.0",
     "jquery": "^3.5.1",
-    "jsdom": "^16.4.0"
+    "jsdom": "^16.4.0",
+    "typedoc": "^0.20.28"
   },
   "devDependencies": {
     "@babel/types": "^7.12.12",

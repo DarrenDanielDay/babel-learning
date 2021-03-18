@@ -1,6 +1,7 @@
 # For this project
 playground.*
 packages/**
+*doc/**
 # Logs
 logs
 *.log
